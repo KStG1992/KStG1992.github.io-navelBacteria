@@ -4,10 +4,6 @@ function updatePlot(singleId) {
         // Data
         var data = importedData;
         console.log("Data",data);
-        
-        // Array of Ids
-        var ids = data.names;
-        console.log("IDs",ids);
 
         // Array of Metadata
         var metadata = data.metadata;
@@ -17,16 +13,41 @@ function updatePlot(singleId) {
         var samples = data.samples;
         console.log("Samples",samples);
 
-        //Filter Samples
+        // Filter Samples
         var filterSamples = samples.filter(sampleObject => sampleObject.id == singleId)[0];
+        // Seeking Sample Values, OTU_Ids, and OTU_Label
         var sampleValues = filterSamples.sample_values;
-        console.log(sampleValues);
+        var OTU_Ids = filterSamples.otu_ids;
+        var OTU_Labels = filterSamples.otu_labels;
+        // Grabbing the Top 10 and Reversing to Account for Plotly's Defaults
+        var top10Samples = sampleValues.slice(0, 10).reverse();
+        var top10Otus = OTU_Ids.slice(0, 10).reverse();
+        var top10Labels = OTU_Labels.slice(0, 10).reverse();
+        console.log("Top 10 Samples", top10Samples);
+        console.log("Top 10 OTU Ids", top10Otus);
+        console.log("Top 10 Labels", top10Labels);
+     
+        // Array of OTU_Ids & OTU_Labels
+        var top10OtuIds = top10Otus.map(d => "OTU " + d); // WHY THE .MAP
+        console.log(top10OtuIds);
         
-        // Array of Ids Labels
-        var labels = ids.map(d => "OTU " + d);
-        console.log(labels);
+        // Array of Ids
+        var ids = data.names;
+        console.log("IDs",ids);
+
+        var trace = {
+            x: top10Samples,
+            y: top10OtuIds,
+            text: top10Labels,
+            type: "bar",
+            orientation: "h"
+        }
+
+        var chartData = [trace];
+
+        Plotly.newPlot("bar", chartData);
 
     });
 }
-updatePlot();
+updatePlot(940);
 
