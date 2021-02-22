@@ -4,25 +4,35 @@ function buildPlots(singleId) {
         // Data
         var data = importedData;
 
-        // Array of Metadata
+        // Array of Metadata & Samples
         var metadata = data.metadata;
-
-        // Array of Samples
         var samples = data.samples;
+
+       // Filter Metadata
+       var filterMetadata = metadata.filter(metaObject => metaObject.id == singleId)[0];
+
+       var demographicInfo = d3.select("#sample-metadata");
+       demographicInfo.html("");
+        Object.entries(filterMetadata).forEach((key) => {
+            demographicInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1]);
+        });
 
         // Filter Samples
         var filterSamples = samples.filter(sampleObject => sampleObject.id == singleId)[0];
+
         // Seeking Sample Values, OTU_Ids, and OTU_Label
         var sampleValues = filterSamples.sample_values;
         var OTU_Ids = filterSamples.otu_ids;
         var OTU_Labels = filterSamples.otu_labels;
-        // Grabbing the Top 10 and Reversing to Account for Plotly's Defaults
+
+        // The Plotly Bar Plot Only Needs the Top 10 Samples
+        // Also, we Must Use .reverse Method to Account for Plotly's Defaults
         var top10Samples = sampleValues.slice(0, 10).reverse();
         var top10Otus = OTU_Ids.slice(0, 10).reverse();
         var top10Labels = OTU_Labels.slice(0, 10).reverse();
      
-        // Array of OTU_Ids & OTU_Labels
-        var top10OtuIds = top10Otus.map(d => "OTU " + d); // WHY THE .MAP;
+        // Using .map Methis to Return Array of OTU Ids
+        var top10OtuIds = top10Otus.map(d => "OTU " + d);
 
         // Create Trace for Bar Plot
         var trace = {
@@ -49,7 +59,7 @@ function buildPlots(singleId) {
 
         var layout = {
             showlegend: false,
-            height: 900,
+            height: 600,
             width: 930
           }
 
