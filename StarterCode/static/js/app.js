@@ -11,10 +11,13 @@ function buildPlots(singleId) {
        // Filter Metadata
        var filterMetadata = metadata.filter(metaObject => metaObject.id == singleId)[0];
 
+        // Selecting Id
        var demographicInfo = d3.select("#sample-metadata");
+       // Clearing Any Data
        demographicInfo.html("");
+       // Creating Table
         Object.entries(filterMetadata).forEach((key) => {
-            demographicInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1]);
+            demographicInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1] + "\n");
         });
 
         // Filter Samples
@@ -52,7 +55,7 @@ function buildPlots(singleId) {
             mode: "markers",
             marker: {
                 color: OTU_Ids,
-                opacity: [1, 0.8, 0.6, 0.4],
+                colorscale: 'Earth',
                 size: sampleValues
             }
         }
@@ -60,7 +63,12 @@ function buildPlots(singleId) {
         var layout = {
             showlegend: false,
             height: 600,
-            width: 930
+            width: 930,
+            xaxis: {
+                title: {
+                    text: 'OTU Id'
+                }
+            }
           }
 
         var chartData = [trace];
@@ -72,28 +80,23 @@ function buildPlots(singleId) {
 }
 
 // Calling Function to Build Plots
-buildPlots(940);
+buildPlots();
 
-// // On Change to DOM, Call dropDown
-// d3.selectAll("#selDataset").on("change", dropDown);
 
-// function dropDown() {
-//     // Selecting Id
-//     var dropDownMenu = d3.select("#selDataset");
-//     // Assign the Value of the Dropdown Menu to a Variable
-//     var id = dropDownMenu.property("value");
-    
-//     d3.json("samples.json").then((importedData) => {
-//         // Data
-//         var data = importedData;
-//         for (var i=0; i<data.names.length; i++) {
-//             if (id == data.names[i]) {
-//                 buildPlots(i);
-//                 return
-//             }
-//         }
-//     });
-// }
 
-// dropDown();
+function populate() {
+    d3.json("samples.json").then((importedData) => {
+        var data = importedData;
+        var dropDownMenu = d3.select("#selDataset")
+        data.names.forEach((value) => {
+            var option = dropDownMenu.append("option");
+            option.text(value).property("value", value);
+        });
+    });
+}
 
+populate();
+
+function optionChanged(name) {
+    buildPlots(name);
+}
