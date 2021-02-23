@@ -59,7 +59,7 @@ function buildPlots(singleId) {
                 size: sampleValues
             }
         }
-
+        // Layout for Trace1
         var layout = {
             showlegend: false,
             height: 600,
@@ -83,20 +83,25 @@ function buildPlots(singleId) {
 buildPlots();
 
 
-
+// Function to Populate Dropdown Menu
 function populate() {
     d3.json("samples.json").then((importedData) => {
         var data = importedData;
+        // Selecting Id
         var dropDownMenu = d3.select("#selDataset")
         data.names.forEach((value) => {
+            // Appending Option Tag to HTML
             var option = dropDownMenu.append("option");
+            //Getting and Setting the Value
             option.text(value).property("value", value);
         });
     });
 }
 
+// Calling Function to Populate Dropdown Menu
 populate();
 
+// Function to Call buildPlots
 function optionChanged(name) {
     buildPlots(name);
 }
