@@ -10,7 +10,6 @@ The dataset reveals that a small handful of microbial species (also called opera
 * [Images](Images):
     * [Dashboard Navels](Images/Dashboard_Navels.png) - PNG of Dashboard
     * [Navel Bacteria](Images/navelBacteria.jpg) - JPG of Bacteria
- * [static/js](static/js):
  * [app.js](app.js) - Code that anlayzes the data.
  * [index.html](index.html) - HTML code that builds dashboard.
  * [samples.json](samples.json) - Contains data for the dashboard.
