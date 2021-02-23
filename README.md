@@ -4,7 +4,7 @@
 This project builds an interactive dashboard to explore the Belly Button Biodiversity dataset, which catalogs the microbes that colonize human navels.
 The dataset reveals that a small handful of microbial species (also called operational taxonomic units, or OTUs, in the study) were present in more than 70% of people, while the rest were relatively rare.
 
-Images/navelBacteria
+[](Images/navelBacteria)
 
 ## Contents
 * [Images](Images):
@@ -12,7 +12,7 @@ Images/navelBacteria
     * [Navel Bacteria](Images/navelBacteria) - JPG of Bacteria
 * [StartCode](StartCode):
     * [static\js](StartCode/static\js):
-        *[app.js](StartCode/static\js/app.js) - Code that anlayzes the data.
+        * [app.js](StartCode/static\js/app.js) - Code that anlayzes the data.
     * [index.html](StartCode/index.html) - HTML code that builds dashboard.
     * [samples.json](StartCode/samples.json) - Contains data for the dashboard.
 
